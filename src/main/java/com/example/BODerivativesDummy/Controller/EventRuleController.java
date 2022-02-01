@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.BODerivativesDummy.Entities.CommissionInstruction;
 import com.example.BODerivativesDummy.Entities.EventRule;
 import com.example.BODerivativesDummy.Entities.FeeInstruction;
+import com.example.BODerivativesDummy.Exceptions.DateInvalidException;
 import com.example.BODerivativesDummy.Service.ChargeRateInstructionService;
 import com.example.BODerivativesDummy.Service.EventRuleService;
+import com.example.BODerivativesDummy.Validator.DateValidator;
 
 @RestController
 @RequestMapping("/tradeApplication")
@@ -32,10 +34,16 @@ public class EventRuleController {
 		for (EventRule er : eventRules) {
 			if (er.getChargeRateInstruction() instanceof CommissionInstruction) {
 				CommissionInstruction commissionInstruction = (CommissionInstruction) er.getChargeRateInstruction();
+				if(!DateValidator.validateDates(commissionInstruction)) {
+					throw new DateInvalidException();
+				}
 				chargeInstrService.saveChargeRateInstructions(commissionInstruction);
 
 			} else {
 				FeeInstruction feeInstruction = (FeeInstruction) er.getChargeRateInstruction();
+				if(!DateValidator.validateDates(feeInstruction)) {
+					throw new DateInvalidException();
+				}
 				chargeInstrService.saveChargeRateInstructions(feeInstruction);
 			}
 			eventRuleService.insertEventRule(er);
