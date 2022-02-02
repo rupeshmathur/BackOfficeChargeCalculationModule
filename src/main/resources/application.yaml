@@ -1,0 +1,39 @@
+spring:
+  profiles: env1
+server:
+  port: 8091
+   
+---
+
+spring:
+  profiles: env2
+server:
+  port: 8092
+  
+---
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+      
+---
+
+spring:
+  h2:
+    console:
+      enabled: true
+      
+---
+
+spring:
+  h2:
+    console:
+      path: /h2-console
+      
+      
+---
+
+spring:
+  datasource:
+    password: password      
