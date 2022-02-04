@@ -1,5 +1,6 @@
 package com.example.BODerivativesDummy.Controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -18,6 +19,7 @@ import com.example.BODerivativesDummy.Entities.ChargeRateInstruction;
 import com.example.BODerivativesDummy.Entities.CommissionInstruction;
 import com.example.BODerivativesDummy.Entities.EventRule;
 import com.example.BODerivativesDummy.Entities.Trade;
+import com.example.BODerivativesDummy.Exceptions.QuantityOrPriceException;
 import com.example.BODerivativesDummy.POJO.Charge;
 import com.example.BODerivativesDummy.POJO.Commission;
 import com.example.BODerivativesDummy.POJO.Fee;
@@ -40,6 +42,9 @@ public class TradeController {
 
 	@PostMapping("/trade")
 	public List<Charge> insertTrade(@RequestBody Trade trade) {
+		if (null == trade.getQuantity() || null == trade.getPrice()) {
+			throw new QuantityOrPriceException();
+		}
 		List<Charge> charges = new ArrayList<Charge>();
 		charges = chargeCalServiceImpl.calculateCharge(trade, charges);
 		tradeService.saveTrade(trade);

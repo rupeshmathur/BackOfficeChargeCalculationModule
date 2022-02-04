@@ -11,8 +11,8 @@ import com.example.BODerivativesDummy.Exceptions.DateInvalidException;
 public class DateExceptionController {
 
 	@ExceptionHandler
-	public ResponseEntity<Object> dateException(DateInvalidException dateInvalid) {
-		return new ResponseEntity<>("Invalid Dates",HttpStatus.NOT_FOUND);
+	public ResponseEntity<Object> eventRuleDateException(DateInvalidException dateInvalid) {
+		return new ResponseEntity<>("Charge start date cannot be greater then charge end date",HttpStatus.NOT_FOUND);
 		
 	}
 }
