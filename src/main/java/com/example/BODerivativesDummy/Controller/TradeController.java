@@ -42,7 +42,7 @@ public class TradeController {
 
 	@PostMapping("/trade")
 	public List<Charge> insertTrade(@RequestBody Trade trade) {
-		if (null == trade.getQuantity() || null == trade.getPrice()) {
+		if (trade.getQuantity().compareTo(BigDecimal.ZERO) == -1 || trade.getPrice().compareTo(BigDecimal.ZERO) == -1) {
 			throw new QuantityOrPriceException();
 		}
 		List<Charge> charges = new ArrayList<Charge>();
