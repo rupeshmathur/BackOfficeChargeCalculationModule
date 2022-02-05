@@ -3,8 +3,6 @@ package com.example.BODerivativesDummy.Entities;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

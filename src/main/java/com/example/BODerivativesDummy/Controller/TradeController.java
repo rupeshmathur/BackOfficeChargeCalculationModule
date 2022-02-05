@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.websocket.server.PathParam;
@@ -57,7 +58,7 @@ public class TradeController {
 	}
 
 	@GetMapping("/getTrade/{id}")
-	public void getTrade(@PathParam(value = "id") long id) {
-		tradeService.findTrade(id);
+	public Optional<Trade> getTrade(@PathParam(value = "id") long id) {
+		return tradeService.findTrade(id);
 	}
 }
