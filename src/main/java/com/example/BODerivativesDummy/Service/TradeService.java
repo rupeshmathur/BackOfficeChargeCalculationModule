@@ -18,7 +18,7 @@ public class TradeService {
 		tradeRepo.save(trade);
 	}
 
-	public Optional<Trade> findTrade(long id) {
+	public Optional<Trade> findTrade(Long id) {
 		return tradeRepo.findById(id);
 	}
 
