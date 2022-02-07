@@ -25,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonTypeInfo(
 		  use = JsonTypeInfo.Id.NAME, 
 		  include = JsonTypeInfo.As.PROPERTY, 
-		  property = "CHARGE_TYPE")
+		  property = "CHARGE_INSTR_TYPE")
 		@JsonSubTypes({ 
 		  @Type(value = CommissionInstruction.class, name = "COMMINSTRUCTION"), 
 		  @Type(value = FeeInstruction.class, name = "FEEINSTRUCTION") 
