@@ -2,37 +2,35 @@ package com.example.BODerivativesDummy.POJO;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+
 import com.example.BODerivativesDummy.Entities.EventRule;
 import com.example.BODerivativesDummy.Entities.FeeInstruction;
 import com.example.BODerivativesDummy.Entities.Trade;
 import com.example.BODerivativesDummy.Enums.ChargeRealizationStatus;
 
+@Entity
+@DiscriminatorValue("FEES")
 public class Fee extends Charge {
 
-	private int feeId;
+	@Column(name = "AMOUNT")
 	private BigDecimal amount;
-	private Trade trade;
-	private EventRule eventRule;
+	@Enumerated(EnumType.STRING)
 	private ChargeRealizationStatus chargeRealizationStatus;
 
 	public Fee() {
 		super();
 	}
 
-	public Fee(BigDecimal amount, Trade trade, EventRule eventRule, ChargeRealizationStatus chargeRealizationStatus) {
+	public Fee(BigDecimal amount, ChargeRealizationStatus chargeRealizationStatus) {
 		super();
 		this.amount = amount;
-		this.trade = trade;
-		this.eventRule = eventRule;
 		this.chargeRealizationStatus = chargeRealizationStatus;
-	}
-
-	public int getFeeId() {
-		return feeId;
-	}
-
-	public void setFeeId(int feeId) {
-		this.feeId = feeId;
 	}
 
 	public BigDecimal getAmount() {
@@ -41,22 +39,6 @@ public class Fee extends Charge {
 
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
-	}
-
-	public Trade getTrade() {
-		return trade;
-	}
-
-	public void setTrade(Trade trade) {
-		this.trade = trade;
-	}
-
-	public EventRule getEventRule() {
-		return eventRule;
-	}
-
-	public void setEventRule(EventRule eventRule) {
-		this.eventRule = eventRule;
 	}
 
 	public ChargeRealizationStatus getChargeRealizationStatus() {
@@ -73,7 +55,7 @@ public class Fee extends Charge {
 		FeeInstruction feeInstr = (FeeInstruction) eventRule.getChargeRateInstruction();
 		BigDecimal rate = ((FeeInstruction) feeInstr).getFeeRate();
 		BigDecimal chargeAmount = trade.getQuantity().multiply(rate);
-		return new Fee(chargeAmount, trade, eventRule, ChargeRealizationStatus.CHARGED);
+		return new Fee(chargeAmount, ChargeRealizationStatus.CHARGED);
 	}
 
 }

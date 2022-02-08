@@ -40,6 +40,7 @@ public class TradeController {
 		}
 		List<Charge> charges = new ArrayList<Charge>();
 		charges = chargeCalServiceImpl.calculateCharge(trade, charges);
+		chargeCalServiceImpl.saveCharges(charges);
 		tradeService.saveTrade(trade);
 		if (charges.isEmpty()) {
 			System.out.println("No satisfied rules found for charge calculation");

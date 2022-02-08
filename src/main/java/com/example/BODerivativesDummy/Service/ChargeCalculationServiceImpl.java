@@ -12,6 +12,7 @@ import com.example.BODerivativesDummy.Entities.Trade;
 import com.example.BODerivativesDummy.POJO.Charge;
 import com.example.BODerivativesDummy.POJO.Commission;
 import com.example.BODerivativesDummy.POJO.Fee;
+import com.example.BODerivativesDummy.Repository.ChargeCalculationRepo;
 
 @Service
 public class ChargeCalculationServiceImpl extends ChargeCalculationService {

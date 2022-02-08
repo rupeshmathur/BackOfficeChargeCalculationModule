@@ -2,6 +2,7 @@ package com.example.BODerivativesDummy.Entities;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "EVENT_RULE")
+@Embeddable
 public class EventRule {
 
 	@Id

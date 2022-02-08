@@ -2,38 +2,35 @@ package com.example.BODerivativesDummy.POJO;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
 import com.example.BODerivativesDummy.Entities.CommissionInstruction;
 import com.example.BODerivativesDummy.Entities.EventRule;
 import com.example.BODerivativesDummy.Entities.Trade;
 import com.example.BODerivativesDummy.Enums.ChargeRealizationStatus;
 
+@Entity
+@DiscriminatorValue("COMMISSIONS")
 public class Commission extends Charge {
 
-	private int commissionId;
+	@Column(name = "AMOUNT")
 	private BigDecimal amount;
-	private Trade trade;
-	private EventRule eventRule;
+	@Enumerated(EnumType.STRING)
 	private ChargeRealizationStatus chargeRealizationStatus;
 
 	public Commission() {
 		super();
 	}
 
-	public Commission(BigDecimal amount, Trade trade, EventRule eventRule,
-			ChargeRealizationStatus chargeRealizationStatus) {
+	public Commission(BigDecimal amount, ChargeRealizationStatus chargeRealizationStatus) {
 		super();
 		this.amount = amount;
-		this.trade = trade;
-		this.eventRule = eventRule;
 		this.chargeRealizationStatus = chargeRealizationStatus;
-	}
-
-	public int getCommissionId() {
-		return commissionId;
-	}
-
-	public void setCommissionId(int commissionId) {
-		this.commissionId = commissionId;
 	}
 
 	public BigDecimal getAmount() {
@@ -42,22 +39,6 @@ public class Commission extends Charge {
 
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
-	}
-
-	public Trade getTrade() {
-		return trade;
-	}
-
-	public void setTrade(Trade trade) {
-		this.trade = trade;
-	}
-
-	public EventRule getEventRule() {
-		return eventRule;
-	}
-
-	public void setEventRule(EventRule eventRule) {
-		this.eventRule = eventRule;
 	}
 
 	public ChargeRealizationStatus getChargeRealizationStatus() {
@@ -74,7 +55,7 @@ public class Commission extends Charge {
 		CommissionInstruction commInstr = (CommissionInstruction) eventRule.getChargeRateInstruction();
 		BigDecimal rate = ((CommissionInstruction) commInstr).getCommissionRate();
 		BigDecimal chargeAmount = trade.getQuantity().multiply(rate);
-		return new Commission(chargeAmount, trade, eventRule, ChargeRealizationStatus.CHARGED);
+		return new Commission(chargeAmount, ChargeRealizationStatus.CHARGED);
 	}
 
 }
