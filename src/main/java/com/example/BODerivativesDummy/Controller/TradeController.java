@@ -34,20 +34,27 @@ public class TradeController {
 	}
 
 	@PostMapping("/trade")
-	public List<Charge> insertTrade(@RequestBody Trade trade) {
-		if (trade.getQuantity().compareTo(BigDecimal.ZERO) == -1 || trade.getPrice().compareTo(BigDecimal.ZERO) == -1) {
-			throw new QuantityOrPriceException();
-		}
-		List<Charge> charges = new ArrayList<Charge>();
-		charges = chargeCalServiceImpl.calculateCharge(trade, charges);
-		chargeCalServiceImpl.saveCharges(charges);
-		tradeService.saveTrade(trade);
-		if (charges.isEmpty()) {
-			System.out.println("No satisfied rules found for charge calculation");
+	public List<Charge> insertTrade(@RequestBody List<Trade> trades) {
+		if(trades.isEmpty()) {
 			return Collections.EMPTY_LIST;
+		} 
+		List<Charge> charges = new ArrayList<Charge>();
+		for (Trade trade : trades) {
+			if (trade.getQuantity().compareTo(BigDecimal.ZERO) == -1
+					|| trade.getPrice().compareTo(BigDecimal.ZERO) == -1) {
+				throw new QuantityOrPriceException();
+			}
+
+			charges = chargeCalServiceImpl.calculateCharge(trade, charges);
+			chargeCalServiceImpl.saveCharges(charges);
+			tradeService.saveTrade(trade);
+			if (charges.isEmpty()) {
+				System.out.println("No satisfied rules found for charge calculation");
+				return Collections.EMPTY_LIST;
+			}
+
 		}
 		return charges;
-
 	}
 
 	@GetMapping("/trades/{id}")
