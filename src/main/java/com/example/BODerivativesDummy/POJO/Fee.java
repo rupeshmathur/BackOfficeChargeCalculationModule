@@ -1,13 +1,17 @@
 package com.example.BODerivativesDummy.POJO;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 import com.example.BODerivativesDummy.Entities.EventRule;
 import com.example.BODerivativesDummy.Entities.FeeInstruction;
@@ -16,8 +20,9 @@ import com.example.BODerivativesDummy.Enums.ChargeRealizationStatus;
 
 @Entity
 @DiscriminatorValue("FEES")
-public class Fee extends Charge {
+public class Fee extends Charge implements Serializable{
 
+	
 	@Column(name = "AMOUNT")
 	private BigDecimal amount;
 	@Enumerated(EnumType.STRING)

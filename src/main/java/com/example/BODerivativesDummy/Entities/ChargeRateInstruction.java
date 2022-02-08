@@ -22,14 +22,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
  * "CHARGE_TYPE")
  */
 @Embeddable
-@JsonTypeInfo(
-		  use = JsonTypeInfo.Id.NAME, 
-		  include = JsonTypeInfo.As.PROPERTY, 
-		  property = "CHARGE_INSTR_TYPE")
-		@JsonSubTypes({ 
-		  @Type(value = CommissionInstruction.class, name = "COMMINSTRUCTION"), 
-		  @Type(value = FeeInstruction.class, name = "FEEINSTRUCTION") 
-		})
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "CHARGE_INSTR_TYPE")
+@JsonSubTypes({ @Type(value = CommissionInstruction.class, name = "COMMINSTRUCTION"),
+		@Type(value = FeeInstruction.class, name = "FEEINSTRUCTION") })
 public abstract class ChargeRateInstruction {
 
 	@Id

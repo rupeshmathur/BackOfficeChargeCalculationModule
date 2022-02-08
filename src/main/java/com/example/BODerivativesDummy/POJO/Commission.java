@@ -1,10 +1,10 @@
 package com.example.BODerivativesDummy.POJO;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -16,7 +16,7 @@ import com.example.BODerivativesDummy.Enums.ChargeRealizationStatus;
 
 @Entity
 @DiscriminatorValue("COMMISSIONS")
-public class Commission extends Charge {
+public class Commission extends Charge  implements Serializable{
 
 	@Column(name = "AMOUNT")
 	private BigDecimal amount;

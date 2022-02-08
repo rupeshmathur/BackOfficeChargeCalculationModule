@@ -13,7 +13,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "EVENT_RULE")
-@Embeddable
 public class EventRule {
 
 	@Id

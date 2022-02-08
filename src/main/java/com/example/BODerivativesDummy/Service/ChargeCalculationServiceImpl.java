@@ -40,10 +40,14 @@ public class ChargeCalculationServiceImpl extends ChargeCalculationService {
 				if (er.getChargeRateInstruction() instanceof CommissionInstruction) {
 					newCharge = new Commission();
 					Charge calculatedCommission = (Commission) newCharge.processCharge(trade, er);
+					calculatedCommission.setEventRule(er);
+					calculatedCommission.setTrade(trade);
 					charges.add(calculatedCommission);
 				} else {
 					newCharge = new Fee();
 					Charge calculatedFee = (Fee) newCharge.processCharge(trade, er);
+					calculatedFee.setEventRule(er);
+					calculatedFee.setTrade(trade);
 					charges.add(calculatedFee);
 				}
 			}

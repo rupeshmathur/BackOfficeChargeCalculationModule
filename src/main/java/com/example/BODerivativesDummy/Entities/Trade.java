@@ -13,7 +13,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "TRADE_ENTITY")
-@Embeddable
 public class Trade {
 
 	public Trade() {

@@ -1,6 +1,5 @@
 package com.example.BODerivativesDummy.Controller;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,6 +18,7 @@ import com.example.BODerivativesDummy.Exceptions.QuantityOrPriceException;
 import com.example.BODerivativesDummy.POJO.Charge;
 import com.example.BODerivativesDummy.Service.ChargeCalculationServiceImpl;
 import com.example.BODerivativesDummy.Service.TradeService;
+import com.example.BODerivativesDummy.Validator.DateValidator;
 
 @RestController
 @RequestMapping("/tradeApplication")
@@ -35,19 +35,19 @@ public class TradeController {
 
 	@PostMapping("/trade")
 	public List<Charge> insertTrade(@RequestBody List<Trade> trades) {
-		if(trades.isEmpty()) {
+		if (trades.isEmpty()) {
 			return Collections.EMPTY_LIST;
-		} 
+		}
 		List<Charge> charges = new ArrayList<Charge>();
 		for (Trade trade : trades) {
-			if (trade.getQuantity().compareTo(BigDecimal.ZERO) == -1
-					|| trade.getPrice().compareTo(BigDecimal.ZERO) == -1) {
+			if (!DateValidator.validateTradeDates(trade)) {
 				throw new QuantityOrPriceException();
 			}
 
 			charges = chargeCalServiceImpl.calculateCharge(trade, charges);
-			chargeCalServiceImpl.saveCharges(charges);
 			tradeService.saveTrade(trade);
+			chargeCalServiceImpl.saveCharges(charges);
+			
 			if (charges.isEmpty()) {
 				System.out.println("No satisfied rules found for charge calculation");
 				return Collections.EMPTY_LIST;

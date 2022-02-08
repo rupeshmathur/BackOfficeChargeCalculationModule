@@ -34,14 +34,14 @@ public class EventRuleController {
 		for (EventRule er : eventRules) {
 			if (er.getChargeRateInstruction() instanceof CommissionInstruction) {
 				CommissionInstruction commissionInstruction = (CommissionInstruction) er.getChargeRateInstruction();
-				if(!DateValidator.validateDates(commissionInstruction)) {
+				if(!DateValidator.validateERDates(commissionInstruction)) {
 					throw new DateInvalidException();
 				}
 				chargeInstrService.saveChargeRateInstructions(commissionInstruction);
 
 			} else {
 				FeeInstruction feeInstruction = (FeeInstruction) er.getChargeRateInstruction();
-				if(!DateValidator.validateDates(feeInstruction)) {
+				if(!DateValidator.validateERDates(feeInstruction)) {
 					throw new DateInvalidException();
 				}
 				chargeInstrService.saveChargeRateInstructions(feeInstruction);
