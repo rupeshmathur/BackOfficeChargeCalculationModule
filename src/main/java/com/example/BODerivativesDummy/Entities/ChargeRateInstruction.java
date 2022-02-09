@@ -4,13 +4,17 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
+import com.example.BODerivativesDummy.Enums.ChargeCalculationAlgorithm;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -35,6 +39,8 @@ public abstract class ChargeRateInstruction {
 	private LocalDate chargeStartDate;
 	@Column(name = "CHARGE_END_DATE")
 	private LocalDate chargeEndDate;
+	@Enumerated(EnumType.STRING)
+	private ChargeCalculationAlgorithm chargeCalculationAlgorithm;
 
 	public ChargeRateInstruction() {
 		super();
@@ -68,6 +74,14 @@ public abstract class ChargeRateInstruction {
 
 	public void setChargeEndDate(LocalDate chargeEndDate) {
 		this.chargeEndDate = chargeEndDate;
+	}
+
+	public ChargeCalculationAlgorithm getChargeCalculationAlgorithm() {
+		return chargeCalculationAlgorithm;
+	}
+
+	public void setChargeCalculationAlgorithm(ChargeCalculationAlgorithm chargeCalculationAlgorithm) {
+		this.chargeCalculationAlgorithm = chargeCalculationAlgorithm;
 	}
 
 }

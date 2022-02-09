@@ -9,7 +9,9 @@ import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 
+import com.example.BODerivativesDummy.Entities.Commission;
 import com.example.BODerivativesDummy.Entities.EventRule;
+import com.example.BODerivativesDummy.Entities.Fee;
 import com.example.BODerivativesDummy.Entities.Trade;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;

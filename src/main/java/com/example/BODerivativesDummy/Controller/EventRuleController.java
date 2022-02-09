@@ -17,6 +17,7 @@ import com.example.BODerivativesDummy.Exceptions.DateInvalidException;
 import com.example.BODerivativesDummy.Service.ChargeRateInstructionService;
 import com.example.BODerivativesDummy.Service.EventRuleService;
 import com.example.BODerivativesDummy.Validator.DateValidator;
+import com.example.BODerivativesDummy.Validator.ValidateEventRule;
 
 @RestController
 @RequestMapping("/tradeApplication")
@@ -51,10 +52,15 @@ public class EventRuleController {
 
 	}
 
+	//TODO :: Delete Functionality is Not Working
 	@DeleteMapping(value = "/deleteER/{id}")
-	public void deleteEventRule(@PathVariable Long id) {
-		eventRuleService.deleteEventRule(id);
-
+	public String deleteEventRule(@PathVariable Long id) {
+		if(ValidateEventRule.validateERInUse(id)) {
+			eventRuleService.deleteEventRule(id);
+			return "EVENT RULE SUCCESSFULLY DELETED";
+		} else {
+			return "EVENT RULE DELETE FAILED";
+		}
 	}
 
 }

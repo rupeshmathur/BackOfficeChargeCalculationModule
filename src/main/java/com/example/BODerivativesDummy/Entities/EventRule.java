@@ -2,7 +2,6 @@ package com.example.BODerivativesDummy.Entities;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,7 +23,7 @@ public class EventRule {
 	@Embedded
 	@OneToOne(cascade = CascadeType.ALL)
 	private ChargeRateInstruction chargeRateInstruction;
-
+	
 	public EventRule() {
 		super();
 	}
