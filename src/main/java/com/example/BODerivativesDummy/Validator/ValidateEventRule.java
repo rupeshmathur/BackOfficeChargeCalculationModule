@@ -17,9 +17,9 @@ public class ValidateEventRule {
 	}
 
 	public static boolean validateERInUse(Long id) {
-		if(eventRuleService.deleteEventRule(id).isEmpty()) {
-			return false;
+		if(eventRuleService.checkERInUse(id).isEmpty()) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 }

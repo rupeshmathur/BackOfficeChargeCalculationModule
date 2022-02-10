@@ -14,6 +14,7 @@ import com.example.BODerivativesDummy.Entities.CommissionInstruction;
 import com.example.BODerivativesDummy.Entities.EventRule;
 import com.example.BODerivativesDummy.Entities.FeeInstruction;
 import com.example.BODerivativesDummy.Exceptions.DateInvalidException;
+import com.example.BODerivativesDummy.Exceptions.EventRuleDeleteException;
 import com.example.BODerivativesDummy.Service.ChargeRateInstructionService;
 import com.example.BODerivativesDummy.Service.EventRuleService;
 import com.example.BODerivativesDummy.Validator.DateValidator;
@@ -35,14 +36,14 @@ public class EventRuleController {
 		for (EventRule er : eventRules) {
 			if (er.getChargeRateInstruction() instanceof CommissionInstruction) {
 				CommissionInstruction commissionInstruction = (CommissionInstruction) er.getChargeRateInstruction();
-				if(!DateValidator.validateERDates(commissionInstruction)) {
+				if (!DateValidator.validateERDates(commissionInstruction)) {
 					throw new DateInvalidException();
 				}
 				chargeInstrService.saveChargeRateInstructions(commissionInstruction);
 
 			} else {
 				FeeInstruction feeInstruction = (FeeInstruction) er.getChargeRateInstruction();
-				if(!DateValidator.validateERDates(feeInstruction)) {
+				if (!DateValidator.validateERDates(feeInstruction)) {
 					throw new DateInvalidException();
 				}
 				chargeInstrService.saveChargeRateInstructions(feeInstruction);
@@ -52,14 +53,13 @@ public class EventRuleController {
 
 	}
 
-	//TODO :: Delete Functionality is Not Working
 	@DeleteMapping(value = "/deleteER/{id}")
 	public String deleteEventRule(@PathVariable Long id) {
-		if(ValidateEventRule.validateERInUse(id)) {
+		if (ValidateEventRule.validateERInUse(id)) {
 			eventRuleService.deleteEventRule(id);
-			return "EVENT RULE SUCCESSFULLY DELETED";
+			return "Event Rule Deleted ";
 		} else {
-			return "EVENT RULE DELETE FAILED";
+			throw new EventRuleDeleteException();
 		}
 	}
 
