@@ -6,12 +6,12 @@ import org.springframework.stereotype.Component;
 import com.example.BODerivativesDummy.Service.EventRuleService;
 
 @Component
-public class ValidateEventRule {
+public class EventRuleValidator {
 
 	@Autowired
 	static EventRuleService eventRuleService;
 	
-	public ValidateEventRule(EventRuleService eventRuleService) {
+	public EventRuleValidator(EventRuleService eventRuleService) {
 		super();
 		this.eventRuleService = eventRuleService;
 	}

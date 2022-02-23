@@ -18,7 +18,7 @@ import com.example.BODerivativesDummy.Exceptions.EventRuleDeleteException;
 import com.example.BODerivativesDummy.Service.ChargeRateInstructionService;
 import com.example.BODerivativesDummy.Service.EventRuleService;
 import com.example.BODerivativesDummy.Validator.DateValidator;
-import com.example.BODerivativesDummy.Validator.ValidateEventRule;
+import com.example.BODerivativesDummy.Validator.EventRuleValidator;
 
 @RestController
 @RequestMapping("/tradeApplication")
@@ -55,7 +55,7 @@ public class EventRuleController {
 
 	@DeleteMapping(value = "/deleteER/{id}")
 	public String deleteEventRule(@PathVariable Long id) {
-		if (ValidateEventRule.validateERInUse(id)) {
+		if (EventRuleValidator.validateERInUse(id)) {
 			eventRuleService.deleteEventRule(id);
 			return "Event Rule Deleted ";
 		} else {
