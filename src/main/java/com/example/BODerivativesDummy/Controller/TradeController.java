@@ -19,6 +19,7 @@ import com.example.BODerivativesDummy.POJO.Charge;
 import com.example.BODerivativesDummy.Service.ChargeCalculationServiceImpl;
 import com.example.BODerivativesDummy.Service.TradeService;
 import com.example.BODerivativesDummy.Validator.DateValidator;
+import com.example.BODerivativesDummy.Validator.TradeQtyPriceValidator;
 
 @RestController
 @RequestMapping("/tradeApplication")
@@ -40,7 +41,7 @@ public class TradeController {
 		}
 		List<Charge> charges = new ArrayList<Charge>();
 		for (Trade trade : trades) {
-			if (!DateValidator.validateTradeDates(trade)) {
+			if (!TradeQtyPriceValidator.validateTradeQtyAndPrice(trade)) {
 				throw new QuantityOrPriceException();
 			}
 

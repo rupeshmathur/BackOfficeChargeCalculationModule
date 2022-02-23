@@ -19,13 +19,4 @@ public class DateValidator {
 		return true;
 	}
 	
-	public static boolean validateTradeDates(Trade trade) {
-
-		System.out.println("Inside Trade Date Validator");
-		if (trade.getQuantity().compareTo(BigDecimal.ZERO) == -1
-				|| trade.getPrice().compareTo(BigDecimal.ZERO) == -1) {
-			return false;
-		}
-		return true;
-	}
 }
