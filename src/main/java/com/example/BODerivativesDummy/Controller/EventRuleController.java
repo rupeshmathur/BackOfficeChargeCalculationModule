@@ -24,6 +24,8 @@ import com.example.BODerivativesDummy.Validator.EventRuleValidator;
 @RequestMapping("/tradeApplication")
 public class EventRuleController {
 
+	
+	public static final String EVENT_RULE_DELETE = "Event Rule Deleted";
 	@Autowired
 	EventRuleService eventRuleService;
 
@@ -57,7 +59,7 @@ public class EventRuleController {
 	public String deleteEventRule(@PathVariable Long id) {
 		if (EventRuleValidator.validateERInUse(id)) {
 			eventRuleService.deleteEventRule(id);
-			return "Event Rule Deleted ";
+			return EVENT_RULE_DELETE;
 		} else {
 			throw new EventRuleDeleteException();
 		}
