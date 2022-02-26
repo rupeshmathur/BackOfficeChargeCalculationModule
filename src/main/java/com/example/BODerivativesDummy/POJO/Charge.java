@@ -1,5 +1,7 @@
 package com.example.BODerivativesDummy.POJO;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,9 +11,12 @@ import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 
+import com.example.BODerivativesDummy.Entities.ChargeRateInstruction;
 import com.example.BODerivativesDummy.Entities.Commission;
+import com.example.BODerivativesDummy.Entities.CommissionInstruction;
 import com.example.BODerivativesDummy.Entities.EventRule;
 import com.example.BODerivativesDummy.Entities.Fee;
+import com.example.BODerivativesDummy.Entities.FeeInstruction;
 import com.example.BODerivativesDummy.Entities.Trade;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
@@ -62,4 +67,35 @@ public abstract class Charge<T> {
 
 	public abstract T processCharge(Trade trade, EventRule eventRule);
 
+	protected BigDecimal calculateChargeAmount(Trade trade, EventRule eventRule) {
+
+		ChargeRateInstruction chargeRateInstruction = null;
+		if (eventRule.getChargeRateInstruction() instanceof CommissionInstruction) {
+			chargeRateInstruction = (CommissionInstruction) eventRule.getChargeRateInstruction();
+		} else {
+			chargeRateInstruction = (FeeInstruction) eventRule.getChargeRateInstruction();
+		}
+		BigDecimal rate = null;
+		BigDecimal chargeAmount = null;
+		BigDecimal multiplier = null;
+		BigDecimal price = null;
+
+		if (chargeRateInstruction != null) {
+			switch (eventRule.getChargeRateInstruction().getChargeCalculationAlgorithm()) {
+			case RATE_PER_CONTRACT:
+				rate = chargeRateInstruction.getRate();
+				chargeAmount = trade.getQuantity().multiply(rate);
+				break;
+			case QUANTITY_BY_MULTIPLIER:
+				rate = chargeRateInstruction.getRate();
+				multiplier = trade.getMultiplier();
+				price = trade.getPrice();
+				chargeAmount = (trade.getQuantity().multiply(rate).multiply(price).multiply(multiplier))
+						.divide(new BigDecimal(10000));
+
+			}
+		}
+
+		return chargeAmount;
+	}
 }

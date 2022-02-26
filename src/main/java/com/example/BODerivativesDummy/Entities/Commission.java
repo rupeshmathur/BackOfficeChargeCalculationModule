@@ -13,6 +13,7 @@ import com.example.BODerivativesDummy.Entities.CommissionInstruction;
 import com.example.BODerivativesDummy.Entities.EventRule;
 import com.example.BODerivativesDummy.Entities.Trade;
 import com.example.BODerivativesDummy.Enums.ChargeRealizationStatus;
+import com.example.BODerivativesDummy.Enums.RateStructure;
 import com.example.BODerivativesDummy.POJO.Charge;
 
 @Entity
@@ -56,9 +57,7 @@ public class Commission extends Charge  implements Serializable{
 	}
 
 	private Object calculateCharge(Trade trade, EventRule eventRule) {
-		CommissionInstruction commInstr = (CommissionInstruction) eventRule.getChargeRateInstruction();
-		BigDecimal rate = ((CommissionInstruction) commInstr).getCommissionRate();
-		BigDecimal chargeAmount = trade.getQuantity().multiply(rate);
+		BigDecimal chargeAmount = super.calculateChargeAmount(trade, eventRule);
 		return new Commission(chargeAmount, ChargeRealizationStatus.CHARGED);
 	}
 

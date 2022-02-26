@@ -16,12 +16,10 @@ public class FeeInstruction extends ChargeRateInstruction {
 
 	public FeeInstruction() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public FeeInstruction(LocalDate chargeStartDate, LocalDate chargeEndDate) {
 		super(chargeStartDate, chargeEndDate);
-		// TODO Auto-generated constructor stub
 	}
 
 	public BigDecimal getFeeRate() {
@@ -30,6 +28,11 @@ public class FeeInstruction extends ChargeRateInstruction {
 
 	public void setFeeRate(BigDecimal feeRate) {
 		this.feeRate = feeRate;
+	}
+
+	@Override
+	public BigDecimal getRate() {
+		return feeRate;
 	}
 
 }

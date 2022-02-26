@@ -1,5 +1,6 @@
 package com.example.BODerivativesDummy.Entities;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -15,6 +16,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 import com.example.BODerivativesDummy.Enums.ChargeCalculationAlgorithm;
+import com.example.BODerivativesDummy.Enums.RateStructure;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -41,6 +43,8 @@ public abstract class ChargeRateInstruction {
 	private LocalDate chargeEndDate;
 	@Enumerated(EnumType.STRING)
 	private ChargeCalculationAlgorithm chargeCalculationAlgorithm;
+	@Enumerated(EnumType.STRING)
+	private RateStructure rateStructure;
 
 	public ChargeRateInstruction() {
 		super();
@@ -83,5 +87,16 @@ public abstract class ChargeRateInstruction {
 	public void setChargeCalculationAlgorithm(ChargeCalculationAlgorithm chargeCalculationAlgorithm) {
 		this.chargeCalculationAlgorithm = chargeCalculationAlgorithm;
 	}
+
+	public RateStructure getRateStructure() {
+		return rateStructure;
+	}
+
+	public void setRateStructure(RateStructure rateStructure) {
+		this.rateStructure = rateStructure;
+	}
+
+	public abstract BigDecimal getRate();
+	
 
 }

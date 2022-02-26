@@ -19,12 +19,14 @@ public class Trade {
 		super();
 	}
 
-	public Trade(LocalDate tradeDate, BigDecimal price, BigDecimal quantity, String exchangeName) {
+	public Trade(LocalDate tradeDate, BigDecimal price, BigDecimal quantity, String exchangeName,
+			BigDecimal multiplier) {
 		super();
 		this.tradeDate = tradeDate;
 		this.price = price;
 		this.quantity = quantity;
 		this.exchangeName = exchangeName;
+		this.multiplier = multiplier;
 	}
 
 	@Id
@@ -39,6 +41,8 @@ public class Trade {
 	private BigDecimal quantity;
 	@Column(name = "EXCHANGE")
 	private String exchangeName;
+	@Column(name = "MULTIPLIER")
+	private BigDecimal multiplier;
 
 	public long getTradeID() {
 		return tradeID;
@@ -79,5 +83,14 @@ public class Trade {
 	public void setExchangeName(String exchangeName) {
 		this.exchangeName = exchangeName;
 	}
+
+	public BigDecimal getMultiplier() {
+		return multiplier;
+	}
+
+	public void setMultiplier(BigDecimal multiplier) {
+		this.multiplier = multiplier;
+	}
+
 
 }

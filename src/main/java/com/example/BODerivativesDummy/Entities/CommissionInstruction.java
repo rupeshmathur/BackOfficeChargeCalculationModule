@@ -36,4 +36,9 @@ public class CommissionInstruction extends ChargeRateInstruction {
 		this.commissionRate = commissionRate;
 	}
 
+	@Override
+	public BigDecimal getRate() {
+		return commissionRate;
+	}
+
 }

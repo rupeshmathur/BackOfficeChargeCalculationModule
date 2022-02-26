@@ -21,9 +21,8 @@ import com.example.BODerivativesDummy.POJO.Charge;
 
 @Entity
 @DiscriminatorValue("FEES")
-public class Fee extends Charge implements Serializable{
+public class Fee extends Charge implements Serializable {
 
-	
 	/**
 	 * 
 	 */
@@ -62,9 +61,7 @@ public class Fee extends Charge implements Serializable{
 	@Override
 	public Object processCharge(Trade trade, EventRule eventRule) {
 
-		FeeInstruction feeInstr = (FeeInstruction) eventRule.getChargeRateInstruction();
-		BigDecimal rate = ((FeeInstruction) feeInstr).getFeeRate();
-		BigDecimal chargeAmount = trade.getQuantity().multiply(rate);
+		BigDecimal chargeAmount = super.calculateChargeAmount(trade, eventRule);
 		return new Fee(chargeAmount, ChargeRealizationStatus.CHARGED);
 	}
 
