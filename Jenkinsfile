@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('Custom Build') {
             steps {
-                sh 'docker -t bo-charge-module'
+                sh 'docker build -t bo-charge-module'
             }
         }
     }
