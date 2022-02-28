@@ -6,7 +6,7 @@ pipeline {
      	
         stage('Custom Build') {
             steps {
-                sh 'docker build -t bo-charge-module .'
+                sh 'docker build -t springio/back_office_charge_module .'
             }
         }
     }
