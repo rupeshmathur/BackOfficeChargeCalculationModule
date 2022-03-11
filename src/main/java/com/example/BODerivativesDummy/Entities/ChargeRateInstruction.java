@@ -2,21 +2,26 @@ package com.example.BODerivativesDummy.Entities;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
+import com.example.BODerivativesDummy.Enums.ApplicationMethod;
 import com.example.BODerivativesDummy.Enums.ChargeCalculationAlgorithm;
 import com.example.BODerivativesDummy.Enums.RateStructure;
+import com.example.BODerivativesDummy.POJO.VolumeBands;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -45,6 +50,11 @@ public abstract class ChargeRateInstruction {
 	private ChargeCalculationAlgorithm chargeCalculationAlgorithm;
 	@Enumerated(EnumType.STRING)
 	private RateStructure rateStructure;
+	@Embedded
+	@ElementCollection(fetch = FetchType.LAZY)
+	private List<VolumeBands> volumeBands;
+	@Enumerated(EnumType.STRING)
+	private ApplicationMethod applicationMethod;
 
 	public ChargeRateInstruction() {
 		super();
@@ -96,7 +106,22 @@ public abstract class ChargeRateInstruction {
 		this.rateStructure = rateStructure;
 	}
 
+	public List<VolumeBands> getVolumeBands() {
+		return volumeBands;
+	}
+
+	public void setVolumeBands(List<VolumeBands> volumeBands) {
+		this.volumeBands = volumeBands;
+	}
+
+	public ApplicationMethod getApplicationMethod() {
+		return applicationMethod;
+	}
+
+	public void setApplicationMethod(ApplicationMethod applicationMethod) {
+		this.applicationMethod = applicationMethod;
+	}
+
 	public abstract BigDecimal getRate();
-	
 
 }

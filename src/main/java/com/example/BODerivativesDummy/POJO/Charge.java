@@ -1,6 +1,8 @@
 package com.example.BODerivativesDummy.POJO;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -18,6 +20,7 @@ import com.example.BODerivativesDummy.Entities.EventRule;
 import com.example.BODerivativesDummy.Entities.Fee;
 import com.example.BODerivativesDummy.Entities.FeeInstruction;
 import com.example.BODerivativesDummy.Entities.Trade;
+import com.example.BODerivativesDummy.Enums.ApplicationMethod;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -80,14 +83,21 @@ public abstract class Charge<T> {
 		BigDecimal multiplier = null;
 		BigDecimal price = null;
 
+		if (chargeRateInstruction.getApplicationMethod() != null) {
+			if (ApplicationMethod.TOTAL.equals(chargeRateInstruction.getApplicationMethod())) {
+				rate = getRateBasedOnVolumeBand(trade.getQuantity(), chargeRateInstruction.getVolumeBands(),
+						chargeRateInstruction);
+
+			} else {
+				// TODO :: INCREMENTAL CALCULATION YET TO BE IMPLEMENTED
+			}
+		}
 		if (chargeRateInstruction != null) {
 			switch (eventRule.getChargeRateInstruction().getChargeCalculationAlgorithm()) {
 			case RATE_PER_CONTRACT:
-				rate = chargeRateInstruction.getRate();
 				chargeAmount = trade.getQuantity().multiply(rate);
 				break;
 			case QUANTITY_BY_MULTIPLIER:
-				rate = chargeRateInstruction.getRate();
 				multiplier = trade.getMultiplier();
 				price = trade.getPrice();
 				chargeAmount = (trade.getQuantity().multiply(rate).multiply(price).multiply(multiplier))
@@ -97,5 +107,22 @@ public abstract class Charge<T> {
 		}
 
 		return chargeAmount;
+	}
+
+	//The Volume Band logic is yet to be refined
+	protected static BigDecimal getRateBasedOnVolumeBand(BigDecimal quantity, List<VolumeBands> volumeBandRates,
+			ChargeRateInstruction chargeRateInstruction) {
+
+		if (volumeBandRates != null) {
+			for (VolumeBands bandRate : volumeBandRates) {
+				if (bandRate.getBand().compareTo(quantity) < 0) {
+					continue;
+				} else {
+					return bandRate.getRate();
+				}
+			}
+		}
+		return chargeRateInstruction.getRate();
+
 	}
 }
